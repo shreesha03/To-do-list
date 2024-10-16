@@ -1,6 +1,7 @@
 const form = document.querySelector('.form');
 const list = document.querySelector('.to-do-list');
 const finished = document.querySelector('.finished');
+const pookieContainer = document.querySelector('.pookie-container');
 
 let selectedCount = 0;
 
@@ -9,6 +10,7 @@ const isMobile = () => {
 };
 
 const addListItem = (toDoItem) =>{
+
     const listItem = document.createElement('li');
     listItem.classList = "flex items-center p-4 bg-gray-100 rounded-md shadow-md hover:bg-gray-200 transition-colors";
     
@@ -41,6 +43,13 @@ const addListItem = (toDoItem) =>{
 
 const handleItemEnter = (event) => {
     event.preventDefault();
+    
+    // console.log('deleting pookie...');
+    
+    while(pookieContainer.hasChildNodes()){
+        pookieContainer.removeChild(pookieContainer.firstChild);
+    }
+
     const toDoItem = form.querySelector('input').value.trim();
 
     if(toDoItem.length>0)
@@ -76,25 +85,19 @@ const toggleSelect = (event) => {
 
     // between list items
     if(!element) return;
-
-    
-    // console.dir(event.target);
     
     const checkbox = element.querySelector('input');
-    
-    console.dir(checkbox);
-    console.log(checkbox.checked);
 
     if(!checkbox.checked){
         selectedCount++;
         checkbox.checked = true;
-        console.log('element is checked!');
+        // console.log('element is checked!');
     }
     else if(checkbox.checked){
         if(selectedCount>0)
             selectedCount--;
         checkbox.checked = false;
-        console.log('element got unchecked!');
+        // console.log('element got unchecked!');
     }
     
     finished.style.display = selectedCount > 0 ? 'block' : 'none';
@@ -113,6 +116,28 @@ list.addEventListener('touchend', (event) =>{
     element.classList.toggle('bg-gray-200');
 })
 
+const addPookie = (pookieContainer) => {
+    // console.log('creating pookie...');
+    const l1 = document.createElement('div');
+    l1.textContent = ' /)_/)';
+    const l2 = document.createElement('div');
+    l2.textContent = '{   . .}';
+    l2.classList.add('text-2xl');
+    const l3 = document.createElement('div');
+    l3.textContent = "/>💗 4U";
+    const l4 = document.createElement('div');
+    l4.textContent = "for completing your tasks!";
+    l4.classList.add('font-normal')
+
+    const pookie = document.createElement('div');
+    pookie.appendChild(l1);
+    pookie.appendChild(l2);
+    pookie.appendChild(l3);
+    pookie.classList = "flex flex-col justify-start text-xl font-bold";
+    pookieContainer.appendChild(pookie);
+    pookieContainer.appendChild(l4);
+}
+
 const clearItems = (event) => {
 
     event.preventDefault();
@@ -124,6 +149,9 @@ const clearItems = (event) => {
             selectedCount--;
             item.remove();
             localStorage.removeItem(item.querySelector('input').value);
+            if(localStorage.length === 0){
+                addPookie(pookieContainer);
+            }
         }
     }
     finished.style.display = selectedCount > 0 ? 'block' : 'none';
