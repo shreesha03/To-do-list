@@ -1,6 +1,6 @@
-let form = document.querySelector('.form');
-let list = document.querySelector('.to-do-list');
-let finished = document.querySelector('.finished');
+const form = document.querySelector('.form');
+const list = document.querySelector('.to-do-list');
+const finished = document.querySelector('.finished');
 
 let selectedCount = 0;
 
@@ -34,7 +34,7 @@ const addListItem = (toDoItem) =>{
 }
 
 (()=>{
-    for(let i = 0; i<localStorage.length; i++){
+    for(let i = 0; i<localStorage.length; i++){     
         let item = localStorage.key(i);
         addListItem(item);
     }
@@ -42,7 +42,7 @@ const addListItem = (toDoItem) =>{
 
 const handleItemEnter = (event) => {
     event.preventDefault();
-    let toDoItem = form.querySelector('input').value.trim();
+    const toDoItem = form.querySelector('input').value.trim();
 
     if(toDoItem.length>0)
     {   
@@ -51,9 +51,10 @@ const handleItemEnter = (event) => {
             event.preventDefault();
             addListItem(toDoItem);
            
-            if(isMobile()){
-                form.querySelector('input').blur();
-            }
+            // closes keyboard on phones
+            // if(isMobile()){
+            //     form.querySelector('input').blur();
+            // }
         }
         else{
             alert("item already exists");
@@ -72,18 +73,27 @@ form.querySelector('input').addEventListener('keydown', (event)=>{
 const toggleSelect = (event) => {
     event.preventDefault();
     
-    let element = event.target.closest('li');
-    console.dir(element.children[0]);
+    const element = event.target.closest('li');
 
-    const checkbox = element.children[0];
+    // between list items
+    if(!element) return;
+
+    
+    // console.dir(event.target);
+    
+    const checkbox = element.querySelector('input');
+    
+    console.dir(checkbox);
+    console.log(checkbox.checked);
 
     if(!checkbox.checked){
         selectedCount++;
         checkbox.checked = true;
         console.log('element is checked!');
     }
-    else{
-        selectedCount--;
+    else if(checkbox.checked){
+        if(selectedCount>0)
+            selectedCount--;
         checkbox.checked = false;
         console.log('element got unchecked!');
     }
@@ -95,21 +105,20 @@ const toggleSelect = (event) => {
 }
 
 list.addEventListener('click', toggleSelect);
-list.addEventListener('touchstart', (event)=>{
-    event.preventDefault();
-    toggleSelect(event);
-})
+list.addEventListener('touchstart', toggleSelect);
+
 list.addEventListener('touchend', (event) =>{
-    let element = event.target.closest('li');
-    console.dir(element.children[0]);
+    const element = event.target.closest('li');
 
     element.classList.toggle('bg-gray-100');
     element.classList.toggle('bg-gray-200');
 })
 
-const clearItems = () => {
+const clearItems = (event) => {
 
-    let allitems = list.querySelectorAll('li');
+    event.preventDefault();
+
+    const allitems = list.querySelectorAll('li');
 
     for(item of Array.from(allitems)){
         if(item.querySelector('input').checked){
