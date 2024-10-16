@@ -6,27 +6,34 @@
     <title>To do list</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body class="w-screen h-screen">
-    <div class="w-[60%] h-full flex flex-col m-10 gap-4">
-        <header class="font-bold text-4xl">
-            <h1>TO DO LIST</h1>
+<body class="w-screen h-auto flex">
+    <div class="w-full sm:w-2/3 lg:w-1/2 h-full flex flex-col mx-auto mt-10 lg:m-10 gap-4">
+        <header class="flex flex-col items-center justify-center lg:justify-start">
+            <div class="images flex">
+                <img class="h-12 object-cover" src="logo4.png" alt="Icon">
+                <img class="h-12 object-cover" src="logo5.png" alt="Icon">
+                <img class="h-12 object-contain" src="logo6.png" alt="Icon">
+            </div>
+            <h1 class="ml-4 text-4xl text-center font-bold">TO DO LIST</h1>
         </header>
         
-        <div class="form flex gap-2">
-            <input class="border-2 px-4 py-2 rounded-lg" type="text" placeholder="What will you do today?">
-            <button class="add bg-blue-500 text-white px-4 py-2 rounded-lg font-bold hover:bg-blue-700">
-                Add
-            </button>
-        </div>
-
-        <ul class="to-do-list flex gap-4 flex-col">
+        <div class="w-80vw mx-auto ">
+            <div class="form flex gap-2 mt-10 items-center justify-center lg:justify-start">
+                <input class="border-2 px-4 py-2 rounded-lg" type="text" placeholder="What will you do today?">
+                <button class="add bg-blue-500 text-white px-4 py-2 rounded-lg font-bold hover:bg-blue-700">
+                    Add
+                </button>
+            </div>
+    
+            <ul class="to-do-list mt-4 flex gap-4 flex-col">
+                
+            </ul>
             
-        </ul>
-        
-        <div class="flex gap-2">
-            <button class="bg-green-500 text-white px-4 py-2 rounded-lg font-bold hover:bg-green-700 hidden finished">
-                FINISHED
-            </button>
+            <div class="flex gap-2">
+                <button class="bg-green-500 text-white px-4 py-2 rounded-lg font-bold hover:bg-green-700 hidden finished">
+                    FINISHED
+                </button>
+            </div>
         </div>
 
     </div>
