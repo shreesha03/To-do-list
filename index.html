@@ -5,6 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>To do list</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        input[type="checkbox"] {
+            accent-color: rgb(245, 52, 84); /* Change checkbox color */
+        }
+    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body class="w-screen h-auto flex">
     <div class="w-full sm:w-2/3 lg:w-1/2 h-full flex flex-col mx-auto mt-10 lg:m-10 gap-4">
@@ -19,7 +25,7 @@
         
         <div class="w-80vw mx-auto ">
             <div class="form flex gap-2 mt-10 items-center justify-center lg:justify-start">
-                <input class="border-2 px-4 py-2 rounded-lg" type="text" placeholder="">
+                <input class="border-2 px-4 py-2 rounded-lg" type="text" placeholder="Nidhi, what's the plan?">
                 <button class="add bg-blue-500 text-white px-4 py-2 rounded-lg font-bold hover:bg-blue-700">
                     Add
                 </button>

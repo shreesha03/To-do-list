@@ -10,20 +10,19 @@ const isMobile = () => {
 
 const addListItem = (toDoItem) =>{
     const listItem = document.createElement('li');
-    listItem.classList = "p-4 bg-gray-100 rounded-md shadow-md hover:bg-gray-200 transition-colors";
+    listItem.classList = "flex items-center p-4 bg-gray-100 rounded-md shadow-md hover:bg-gray-200 transition-colors";
     
     const checkBox = document.createElement('input');
     checkBox.id = toDoItem;
     checkBox.type = 'checkbox';
     checkBox.name = 'item';
     checkBox.value = toDoItem;
-    checkBox.classList = "mr-2";
+    checkBox.classList = "w-4 h-4 mr-2";
 
     const label = document.createElement('label');
     label.textContent = toDoItem;
     label.setAttribute('for', checkBox.id)
-    label.classList.add('ml-6');
-    label.classList = "text-lg font-medium text-gray-700";
+    label.classList = "ml-2 text-lg font-medium text-gray-700 ";
 
     listItem.appendChild(checkBox);
     listItem.appendChild(label);
