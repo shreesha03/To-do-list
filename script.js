@@ -4,6 +4,10 @@ let finished = document.querySelector('.finished');
 
 let selectedCount = 0;
 
+const isMobile = () => {
+    return /Mobi|Android/i.test(navigator.userAgent);
+};
+
 const addListItem = (toDoItem) =>{
     const listItem = document.createElement('li');
     listItem.classList = "p-4 bg-gray-100 rounded-md shadow-md hover:bg-gray-200 transition-colors";
@@ -36,47 +40,75 @@ const addListItem = (toDoItem) =>{
     }
 })();
 
-
-form.querySelector('button').addEventListener('click', (event)=>{
-    let toDoItem = form.querySelector('input').value
-    form.querySelector('input').value = '';
+const handleItemEnter = (event) => {
     event.preventDefault();
-    addListItem(toDoItem);
-})
+    let toDoItem = form.querySelector('input').value.trim();
+
+    if(toDoItem.length>0)
+    {   
+        if(!localStorage.getItem(toDoItem)){
+            form.querySelector('input').value = '';
+            event.preventDefault();
+            addListItem(toDoItem);
+           
+            if(isMobile()){
+                form.querySelector('input').blur();
+            }
+        }
+        else{
+            alert("item already exists");
+        }
+    }
+}
+
+form.querySelector('.add').addEventListener('click', handleItemEnter)
 
 form.querySelector('input').addEventListener('keydown', (event)=>{
-    let toDoItem = form.querySelector('input').value
-    
     if (event.key == 'Enter'){
-        form.querySelector('input').value = '';
-        addListItem(toDoItem);
+        handleItemEnter(event);
     }
 })
 
-
-list.addEventListener('click', (event)=>{
-    console.log("event target :", event.target);
+const toggleSelect = (event) => {
+    event.preventDefault();
+    
     let element = event.target.closest('li');
-    // event.stopImmediatePropagation
-    // console.dir(element)
-    const currCheckBox = element.querySelector('input');
+    console.dir(element.children[0]);
 
-    if(!currCheckBox.checked){
+    const checkbox = element.children[0];
+
+    if(!checkbox.checked){
         selectedCount++;
-        currCheckBox.checked = true;
+        checkbox.checked = true;
+        console.log('element is checked!');
     }
     else{
         selectedCount--;
-        currCheckBox.checked = false;
+        checkbox.checked = false;
+        console.log('element got unchecked!');
     }
     
     finished.style.display = selectedCount > 0 ? 'block' : 'none';
 
     element.classList.toggle('bg-gray-100');
     element.classList.toggle('bg-gray-200');
+}
+
+list.addEventListener('click', toggleSelect);
+list.addEventListener('touchstart', (event)=>{
+    event.preventDefault();
+    toggleSelect(event);
+})
+list.addEventListener('touchend', (event) =>{
+    let element = event.target.closest('li');
+    console.dir(element.children[0]);
+
+    element.classList.toggle('bg-gray-100');
+    element.classList.toggle('bg-gray-200');
 })
 
-finished.addEventListener('click', ()=>{
+const clearItems = () => {
+
     let allitems = list.querySelectorAll('li');
 
     for(item of Array.from(allitems)){
@@ -87,4 +119,7 @@ finished.addEventListener('click', ()=>{
         }
     }
     finished.style.display = selectedCount > 0 ? 'block' : 'none';
-})
+}
+
+finished.addEventListener('click', clearItems);
+finished.addEventListener('touchstart', clearItems);
